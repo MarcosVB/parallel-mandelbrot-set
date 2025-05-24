@@ -10,11 +10,11 @@ document.getElementById("startRender").onclick = () => {
   height = parseInt(document.getElementById("inputHeight").value);
   const blockSize = parseInt(document.getElementById("inputBlockSize").value);
   const threads = parseInt(document.getElementById("inputThreads").value);
+  const iterations = parseInt(document.getElementById("inputIterations").value);
   const reMin = parseFloat(document.getElementById("inputRealMin").value);
   const reMax = parseFloat(document.getElementById("inputRealMax").value);
   const imMin = parseFloat(document.getElementById("inputImaginaryMin").value);
   const imMax = parseFloat(document.getElementById("inputImaginaryMax").value);
-  const iterations = parseInt(document.getElementById("inputIterations").value);
 
   canvas.width = width;
   canvas.height = height;
@@ -25,11 +25,11 @@ document.getElementById("startRender").onclick = () => {
     height,
     blockSize,
     threads,
+    iterations,
     reMin,
     reMax,
     imMin,
     imMax,
-    iterations,
   };
   socket.send(JSON.stringify(config));
 };

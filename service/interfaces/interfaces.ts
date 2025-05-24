@@ -4,12 +4,12 @@ export interface IComputeMandelbrot {
   blockSize: number;
   height: number;
   threads: number;
+  iterations: number;
   width: number;
   reMin: number;
   reMax: number;
   imMin: number;
   imMax: number;
-  iterations: number;
   ws: WebSocket;
 }
 

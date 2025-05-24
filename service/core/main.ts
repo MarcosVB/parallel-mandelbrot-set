@@ -10,12 +10,12 @@ export async function computeMandelbrot({
   blockSize,
   height,
   threads,
+  iterations,
   width,
   reMin,
   reMax,
   imMin,
   imMax,
-  iterations,
   ws,
 }: IComputeMandelbrot) {
   const tasks: IWorkerData[] = [];

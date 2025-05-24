@@ -28,11 +28,11 @@ wss.on("connection", (ws) => {
         height,
         blockSize,
         threads = os.cpus().length,
+        iterations,
         reMin,
         reMax,
         imMin,
         imMax,
-        iterations,
       }: IComputeMandelbrot = JSON.parse(message.toString());
 
       console.log("Received config:", {
