@@ -22,6 +22,9 @@ wss.on("connection", (ws) => {
   console.log("Client connected");
 
   ws.on("message", (message) => {
+    const config = message.toString();
+    console.log("Received config:", config);
+
     try {
       const {
         width,
@@ -33,19 +36,7 @@ wss.on("connection", (ws) => {
         reMax,
         imMin,
         imMax,
-      }: IComputeMandelbrot = JSON.parse(message.toString());
-
-      console.log("Received config:", {
-        width,
-        height,
-        blockSize,
-        threads,
-        reMin,
-        reMax,
-        imMin,
-        imMax,
-        iterations,
-      });
+      }: IComputeMandelbrot = JSON.parse(config);
 
       computeMandelbrot({
         width,
