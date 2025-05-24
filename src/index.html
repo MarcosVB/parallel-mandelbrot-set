@@ -9,6 +9,14 @@
   </style>
 </head>
 <body>
+  <div style="text-align: center; padding: 10px; background: #111; color: white;">
+    <label>Width: <input type="number" id="inputWidth" value="800"></label>
+    <label>Height: <input type="number" id="inputHeight" value="600"></label>
+    <label>Block Size: <input type="number" id="inputBlockSize" value="10"></label>
+    <label>Threads: <input type="number" id="inputThreads" value="4"></label>
+    <button id="startRender">Start Render</button>
+  </div>
+
   <canvas id="mandelbrotCanvas" width="800" height="600"></canvas>
   <script src="main.js"></script>
 </body>

@@ -1,9 +1,23 @@
 const canvas = document.getElementById("mandelbrotCanvas");
 const ctx = canvas.getContext("2d");
-const width = canvas.width;
-const height = canvas.height;
-
 const socket = new WebSocket(`ws://${location.host}`);
+
+let width = canvas.width;
+let height = canvas.height;
+
+document.getElementById("startRender").onclick = () => {
+  width = parseInt(document.getElementById("inputWidth").value);
+  height = parseInt(document.getElementById("inputHeight").value);
+  const blockSize = parseInt(document.getElementById("inputBlockSize").value);
+  const threads = parseInt(document.getElementById("inputThreads").value);
+
+  canvas.width = width;
+  canvas.height = height;
+  ctx.clearRect(0, 0, width, height);
+
+  const config = { width, height, blockSize, threads };
+  socket.send(JSON.stringify(config));
+};
 
 socket.onopen = () => {
   console.log("Connected to Mandelbrot WebSocket server");

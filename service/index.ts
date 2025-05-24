@@ -4,12 +4,9 @@ import { WebSocket } from "ws";
 import { computeMandelbrot } from "./core/main";
 import path from "path";
 import os from "os";
+import { IComputeMandelbrot } from "./interfaces/interfaces";
 
 const PORT = 3000;
-const THREADS = os.cpus().length;
-const WIDTH = 800;
-const HEIGHT = 600;
-const BLOCK_SIZE = 10;
 
 const app = express();
 const server = createServer(app);
@@ -19,16 +16,40 @@ app.use(express.static(path.join(__dirname, "..", "src")));
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(`Threads: ${THREADS}`);
 });
 
 wss.on("connection", (ws) => {
   console.log("Client connected");
-  computeMandelbrot({
-    blockSize: BLOCK_SIZE,
-    height: HEIGHT,
-    threads: THREADS,
-    width: WIDTH,
-    ws,
+
+  ws.on("message", (message) => {
+    try {
+      const {
+        width,
+        height,
+        blockSize,
+        threads = os.cpus().length,
+      }: IComputeMandelbrot = JSON.parse(message.toString());
+
+      console.log("Received config:", { width, height, blockSize, threads });
+
+      computeMandelbrot({
+        width,
+        height,
+        blockSize,
+        threads,
+        ws,
+      });
+    } catch (e) {
+      console.error("Invalid message format", e);
+      ws.send("Error: Invalid configuration.");
+    }
   });
+});
+
+wss.on("close", () => {
+  console.log("Client disconnected");
+});
+
+wss.on("error", (error) => {
+  console.error("WebSocket error:", error);
 });
