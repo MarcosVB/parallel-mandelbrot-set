@@ -11,6 +11,11 @@ export async function computeMandelbrot({
   height,
   threads,
   width,
+  reMin,
+  reMax,
+  imMin,
+  imMax,
+  iterations,
   ws,
 }: IComputeMandelbrot) {
   const tasks: IWorkerData[] = [];
@@ -29,6 +34,11 @@ export async function computeMandelbrot({
         height: blockSize,
         totalWidth: width,
         totalHeight: height,
+        reMin,
+        reMax,
+        imMin,
+        imMax,
+        iterations,
       });
     }
   }

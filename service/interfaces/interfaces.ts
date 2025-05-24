@@ -5,6 +5,11 @@ export interface IComputeMandelbrot {
   height: number;
   threads: number;
   width: number;
+  reMin: number;
+  reMax: number;
+  imMin: number;
+  imMax: number;
+  iterations: number;
   ws: WebSocket;
 }
 
@@ -15,6 +20,11 @@ export interface IWorkerData {
   height: number;
   totalWidth: number;
   totalHeight: number;
+  reMin: number;
+  reMax: number;
+  imMin: number;
+  imMax: number;
+  iterations: number;
 }
 
 export interface IWorkerResult {

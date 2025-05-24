@@ -28,15 +28,35 @@ wss.on("connection", (ws) => {
         height,
         blockSize,
         threads = os.cpus().length,
+        reMin,
+        reMax,
+        imMin,
+        imMax,
+        iterations,
       }: IComputeMandelbrot = JSON.parse(message.toString());
 
-      console.log("Received config:", { width, height, blockSize, threads });
+      console.log("Received config:", {
+        width,
+        height,
+        blockSize,
+        threads,
+        reMin,
+        reMax,
+        imMin,
+        imMax,
+        iterations,
+      });
 
       computeMandelbrot({
         width,
         height,
         blockSize,
         threads,
+        reMin,
+        reMax,
+        imMin,
+        imMax,
+        iterations,
         ws,
       });
     } catch (e) {
