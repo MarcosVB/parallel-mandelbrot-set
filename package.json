@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
+    "piscina": "^5.0.0",
     "ws": "^8.18.2"
   },
   "devDependencies": {
