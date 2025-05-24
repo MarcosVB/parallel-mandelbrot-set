@@ -1,4 +1,4 @@
-import { IWorkerData } from "../interfaces/interfaces";
+import { IWorkerData, IWorkerResult } from "../interfaces/interfaces";
 
 export default ({
   xStart,
@@ -7,7 +7,7 @@ export default ({
   height,
   totalWidth,
   totalHeight,
-}: IWorkerData) => {
+}: IWorkerData): IWorkerResult => {
   const pixels = [];
 
   for (let y = yStart; y < yStart + height; y++) {

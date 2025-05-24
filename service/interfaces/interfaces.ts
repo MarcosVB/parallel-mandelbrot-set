@@ -16,3 +16,11 @@ export interface IWorkerData {
   totalWidth: number;
   totalHeight: number;
 }
+
+export interface IWorkerResult {
+  xStart: number;
+  yStart: number;
+  width: number;
+  height: number;
+  pixels: number[];
+}

@@ -1,6 +1,10 @@
 import path from "path";
 import Piscina from "piscina";
-import { IComputeMandelbrot } from "../interfaces/interfaces";
+import {
+  IComputeMandelbrot,
+  IWorkerData,
+  IWorkerResult,
+} from "../interfaces/interfaces";
 
 export async function computeMandelbrot({
   blockSize,
@@ -9,9 +13,9 @@ export async function computeMandelbrot({
   width,
   ws,
 }: IComputeMandelbrot) {
-  const tasks = [];
+  const tasks: IWorkerData[] = [];
 
-  const piscina = new Piscina({
+  const piscina = new Piscina<IWorkerData, IWorkerResult>({
     filename: path.join(__dirname, "worker.js"),
     maxThreads: threads,
   });
