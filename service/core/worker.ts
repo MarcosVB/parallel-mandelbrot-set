@@ -5,8 +5,8 @@ export default ({
   yStart,
   blockWidth,
   blockHeight,
-  totalWidth,
-  totalHeight,
+  width,
+  height,
   reMin,
   reMax,
   imMin,
@@ -17,8 +17,8 @@ export default ({
 
   for (let y = yStart; y < yStart + blockHeight; y++) {
     for (let x = xStart; x < xStart + blockWidth; x++) {
-      const re = (x / totalWidth) * (reMax - reMin) + reMin;
-      const im = (y / totalHeight) * (imMax - imMin) + imMin;
+      const re = (x / width) * (reMax - reMin) + reMin;
+      const im = (y / height) * (imMax - imMin) + imMin;
       const iter = mandelbrot(re, im, iterations);
       pixels.push(iter);
     }
