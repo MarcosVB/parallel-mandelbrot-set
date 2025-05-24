@@ -1,13 +1,13 @@
 import express from "express";
 import { createServer } from "http";
-import { WebSocket } from "ws";
+import WebSocket from "ws";
 import { computeMandelbrot } from "./core/main";
 import path from "path";
-import os from "os";
 import { IComputeMandelbrot } from "./interfaces/interfaces";
+// import os from "os";
 
 const PORT = 3000;
-
+// const threads = os.cpus().length;
 const app = express();
 const server = createServer(app);
 const wss = new WebSocket.Server({ server: server });
@@ -22,37 +22,9 @@ wss.on("connection", (ws) => {
   console.log("Client connected");
 
   ws.on("message", (message) => {
-    const config = message.toString();
-    console.log("Received config:", config);
-
-    try {
-      const {
-        width,
-        height,
-        blockSize,
-        threads = os.cpus().length,
-        iterations,
-        reMin,
-        reMax,
-        imMin,
-        imMax,
-      }: IComputeMandelbrot = JSON.parse(config);
-
-      computeMandelbrot({
-        width,
-        height,
-        blockSize,
-        threads,
-        reMin,
-        reMax,
-        imMin,
-        imMax,
-        iterations,
-        ws,
-      });
-    } catch (e) {
-      console.error("Invalid message format", e);
-      ws.send("Error: Invalid configuration.");
+    const config = parseConfig(ws, message);
+    if (config) {
+      computeMandelbrot({ ...config, ws });
     }
   });
 });
@@ -64,3 +36,18 @@ wss.on("close", () => {
 wss.on("error", (error) => {
   console.error("WebSocket error:", error);
 });
+
+function parseConfig(
+  ws: WebSocket.WebSocket,
+  message: WebSocket.RawData
+): IComputeMandelbrot | undefined {
+  try {
+    const config = message.toString();
+    console.log("Received config:", config);
+    return JSON.parse(config);
+  } catch (error) {
+    console.error("Invalid message format", error);
+    ws.send("Error: Invalid configuration.");
+  }
+  return undefined;
+}
