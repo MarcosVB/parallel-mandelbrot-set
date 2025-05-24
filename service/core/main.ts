@@ -30,8 +30,8 @@ export async function computeMandelbrot({
       tasks.push({
         xStart: x,
         yStart: y,
-        width: blockSize,
-        height: blockSize,
+        blockWidth: blockSize,
+        blockHeight: blockSize,
         totalWidth: width,
         totalHeight: height,
         reMin,

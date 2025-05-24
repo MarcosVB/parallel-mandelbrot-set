@@ -46,8 +46,8 @@ socket.onmessage = (event) => {
 };
 
 function drawBlock(data) {
-  const { xStart, yStart, width, height, pixels } = data;
-  const imageData = ctx.createImageData(width, height);
+  const { xStart, yStart, blockWidth, blockHeight, pixels } = data;
+  const imageData = ctx.createImageData(blockWidth, blockHeight);
 
   for (let i = 0; i < pixels.length; i++) {
     const iter = pixels[i];

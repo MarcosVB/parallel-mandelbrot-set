@@ -16,8 +16,8 @@ export interface IComputeMandelbrot {
 export interface IWorkerData {
   xStart: number;
   yStart: number;
-  width: number;
-  height: number;
+  blockWidth: number;
+  blockHeight: number;
   totalWidth: number;
   totalHeight: number;
   reMin: number;
@@ -30,7 +30,7 @@ export interface IWorkerData {
 export interface IWorkerResult {
   xStart: number;
   yStart: number;
-  width: number;
-  height: number;
+  blockWidth: number;
+  blockHeight: number;
   pixels: number[];
 }

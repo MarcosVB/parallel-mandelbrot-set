@@ -3,8 +3,8 @@ import { IWorkerData, IWorkerResult } from "../interfaces/interfaces";
 export default ({
   xStart,
   yStart,
-  width,
-  height,
+  blockWidth,
+  blockHeight,
   totalWidth,
   totalHeight,
   reMin,
@@ -15,8 +15,8 @@ export default ({
 }: IWorkerData): IWorkerResult => {
   const pixels = [];
 
-  for (let y = yStart; y < yStart + height; y++) {
-    for (let x = xStart; x < xStart + width; x++) {
+  for (let y = yStart; y < yStart + blockHeight; y++) {
+    for (let x = xStart; x < xStart + blockWidth; x++) {
       const re = (x / totalWidth) * (reMax - reMin) + reMin;
       const im = (y / totalHeight) * (imMax - imMin) + imMin;
       const iter = mandelbrot(re, im, iterations);
@@ -27,8 +27,8 @@ export default ({
   return {
     xStart,
     yStart,
-    width,
-    height,
+    blockWidth,
+    blockHeight,
     pixels,
   };
 };
