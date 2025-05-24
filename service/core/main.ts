@@ -1,14 +1,6 @@
 import path from "path";
 import Piscina from "piscina";
-import WebSocket from "ws";
-
-interface IComputeMandelbrot {
-  blockSize: number;
-  height: number;
-  threads: number;
-  width: number;
-  ws: WebSocket;
-}
+import { IComputeMandelbrot } from "../interfaces/interfaces";
 
 export async function computeMandelbrot({
   blockSize,

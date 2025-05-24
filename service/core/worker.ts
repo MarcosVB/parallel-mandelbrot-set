@@ -1,11 +1,4 @@
-interface IWorkerData {
-  xStart: number;
-  yStart: number;
-  width: number;
-  height: number;
-  totalWidth: number;
-  totalHeight: number;
-}
+import { IWorkerData } from "../interfaces/interfaces";
 
 export default ({
   xStart,
