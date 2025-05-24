@@ -2,33 +2,43 @@ import path from "path";
 import Piscina from "piscina";
 import WebSocket from "ws";
 
-const WIDTH = 800;
-const HEIGHT = 600;
-const BLOCK_SIZE = 40;
+interface IComputeMandelbrot {
+  blockSize: number;
+  height: number;
+  threads: number;
+  width: number;
+  ws: WebSocket;
+}
 
-export async function computeMandelbrot(ws: WebSocket) {
+export async function computeMandelbrot({
+  blockSize,
+  height,
+  threads,
+  width,
+  ws,
+}: IComputeMandelbrot) {
   const tasks = [];
 
   const piscina = new Piscina({
     filename: path.join(__dirname, "worker.js"),
-    maxThreads: 4,
+    maxThreads: threads,
   });
 
-  for (let y = 0; y < HEIGHT; y += BLOCK_SIZE) {
-    for (let x = 0; x < WIDTH; x += BLOCK_SIZE) {
+  for (let x = 0; x < width; x += blockSize) {
+    for (let y = 0; y < height; y += blockSize) {
       tasks.push({
         xStart: x,
         yStart: y,
-        width: BLOCK_SIZE,
-        height: BLOCK_SIZE,
-        totalWidth: WIDTH,
-        totalHeight: HEIGHT,
+        width: blockSize,
+        height: blockSize,
+        totalWidth: width,
+        totalHeight: height,
       });
     }
   }
 
   tasks.forEach(async (task) => {
-    const result = await piscina.run(task);
-    ws.send(JSON.stringify({ type: "block", data: result }));
+    const data = await piscina.run(task);
+    ws.send(JSON.stringify({ type: "block", data }));
   });
 }
