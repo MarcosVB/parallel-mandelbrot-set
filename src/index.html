@@ -16,16 +16,21 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            padding: 8px;
+            gap: 12px;
+            padding: 12px;
             background: #111;
             font-size: 13px;
+            border-bottom: 1px solid #333;
         }
 
         .group {
             display: flex;
-            gap: 6px;
+            flex-wrap: wrap;
             align-items: center;
+            gap: 8px;
+            background: #1a1a1a;
+            padding: 8px 12px;
+            border-radius: 6px;
         }
 
         .group label {
@@ -40,16 +45,22 @@
             font-size: 12px;
             border: none;
             border-radius: 4px;
+            background: #222;
+            color: white;
         }
 
         #startRender {
-            padding: 4px 10px;
+            padding: 6px 14px;
             font-size: 13px;
             background: #333;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+        }
+
+        #startRender:hover {
+            background: #444;
         }
 
         canvas {
@@ -59,28 +70,46 @@
         }
 
         .presets {
-            margin-top: 1em;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            background: #111;
+            padding: 10px;
+            font-size: 13px;
+            border-bottom: 1px solid #333;
         }
 
         .presets button {
-            margin-right: 0.5em;
-            padding: 0.3em 0.6em;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            background: #222;
+            color: white;
             cursor: pointer;
+        }
+
+        .presets button:hover {
+            background: #333;
         }
     </style>
 </head>
 
 <body>
     <div class="controls">
-        <label>Width: <input type="number" id="inputWidth" value="800"></label>
-        <label>Height: <input type="number" id="inputHeight" value="800"></label>
-        <label>Block: <input type="number" id="inputBlockSize" value="100"></label>
-        <label>Threads: <input type="number" id="inputThreads" value="4"></label>
-        <label>Iterations: <input type="number" id="inputIterations" value="200"></label>
-        <label>Real: <input type="number" id="inputReal" value="-0.5" step="0.01"></label>
-        <label>Imaginary: <input type="number" id="inputImaginary" value="0" step="0.01"></label>
-        <label>Zoom: <input type="number" id="inputZoom" value="1" step="1"></label>
-        <button id="startRender">Run</button>
+        <div class="group">
+            <label>Width: <input type="number" id="inputWidth" value="800"></label>
+            <label>Height: <input type="number" id="inputHeight" value="800"></label>
+            <label>Block: <input type="number" id="inputBlockSize" value="100"></label>
+            <label>Threads: <input type="number" id="inputThreads" value="4"></label>
+            <label>Iterations: <input type="number" id="inputIterations" value="200"></label>
+        </div>
+        <div class="group">
+            <label>Real: <input type="number" id="inputReal" value="-0.5" step="0.01"></label>
+            <label>Imaginary: <input type="number" id="inputImaginary" value="0" step="0.01"></label>
+            <label>Zoom: <input type="number" id="inputZoom" value="1" step="1"></label>
+            <button id="startRender">Render</button>
+        </div>
     </div>
 
     <div class="presets">
