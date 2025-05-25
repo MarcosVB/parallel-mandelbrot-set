@@ -3,11 +3,10 @@ import { createServer } from "http";
 import WebSocket from "ws";
 import { computeMandelbrot } from "./core/main";
 import path from "path";
-import { IComputeMandelbrot } from "./interfaces/interfaces";
-// import os from "os";
+import { UIParameters } from "./interfaces/interfaces";
+import { z } from "zod";
 
 const PORT = 3000;
-// const threads = os.cpus().length;
 const app = express();
 const server = createServer(app);
 const wss = new WebSocket.Server({ server: server });
@@ -40,14 +39,21 @@ wss.on("error", (error) => {
 function parseConfig(
   ws: WebSocket.WebSocket,
   message: WebSocket.RawData
-): IComputeMandelbrot | undefined {
+): z.infer<typeof UIParameters> | undefined {
   try {
     const config = message.toString();
-    console.log("Received config:", config);
-    return JSON.parse(config);
-  } catch (error) {
-    console.error("Invalid message format", error);
-    ws.send("Error: Invalid configuration.");
+    const parsedConfig = JSON.parse(config);
+    const validation = UIParameters.safeParse(parsedConfig);
+    if (!validation.success) {
+      throw new Error(
+        `Invalid parameters: ${JSON.stringify(validation.error.errors)}`
+      );
+    }
+    console.log("Config:", JSON.stringify(validation.data));
+    return validation.data;
+  } catch (error: any) {
+    console.error(error);
+    ws.send(error.message);
   }
   return undefined;
 }

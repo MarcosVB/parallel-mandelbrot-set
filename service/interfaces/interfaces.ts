@@ -1,33 +1,38 @@
 import WebSocket from "ws";
+import { z } from "zod";
+import os from "os";
 
-interface IImage {
-  width: number;
-  height: number;
-}
+const Image = z.object({
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+});
 
-interface IMandelbrot {
-  iterations: number;
-  reMin: number;
-  reMax: number;
-  imMin: number;
-  imMax: number;
-}
+const Mandelbrot = z.object({
+  iterations: z.number().int().positive(),
+  reMin: z.number(),
+  reMax: z.number(),
+  imMin: z.number(),
+  imMax: z.number(),
+});
 
-interface IBlock {
-  xStart: number;
-  yStart: number;
-  blockWidth: number;
-  blockHeight: number;
-}
+const Block = z.object({
+  xStart: z.number().int(),
+  yStart: z.number().int(),
+  blockWidth: z.number().int().positive(),
+  blockHeight: z.number().int().positive(),
+});
 
-export interface IComputeMandelbrot extends IImage, IMandelbrot {
-  blockSize: number;
-  threads: number;
-  ws: WebSocket;
-}
+export const UIParameters = Image.merge(Mandelbrot).extend({
+  blockSize: z.number().int().positive(),
+  threads: z.number().int().min(1).max(os.cpus().length),
+});
 
-export interface IWorkerData extends IImage, IMandelbrot, IBlock {}
+export const ComputeMandelbrot = UIParameters.extend({
+  ws: z.instanceof(WebSocket),
+});
 
-export interface IWorkerResult extends IBlock {
-  pixels: number[];
-}
+export const WorkerData = Image.merge(Mandelbrot).merge(Block);
+
+export const WorkerResult = Block.extend({
+  pixels: z.array(z.number()),
+});

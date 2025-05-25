@@ -1,4 +1,5 @@
-import { IWorkerData, IWorkerResult } from "../interfaces/interfaces";
+import { z } from "zod";
+import { WorkerData, WorkerResult } from "../interfaces/interfaces";
 
 export default ({
   xStart,
@@ -12,7 +13,7 @@ export default ({
   imMin,
   imMax,
   iterations,
-}: IWorkerData): IWorkerResult => {
+}: z.infer<typeof WorkerData>): z.infer<typeof WorkerResult> => {
   const pixels = [];
 
   for (let y = yStart; y < yStart + blockHeight; y++) {

@@ -1,10 +1,11 @@
 import path from "path";
 import Piscina from "piscina";
 import {
-  IComputeMandelbrot,
-  IWorkerData,
-  IWorkerResult,
+  ComputeMandelbrot,
+  WorkerData,
+  WorkerResult,
 } from "../interfaces/interfaces";
+import { z } from "zod";
 
 export async function computeMandelbrot({
   blockSize,
@@ -17,10 +18,13 @@ export async function computeMandelbrot({
   imMin,
   imMax,
   ws,
-}: IComputeMandelbrot) {
-  const tasks: IWorkerData[] = [];
+}: z.infer<typeof ComputeMandelbrot>) {
+  const tasks: Array<z.infer<typeof WorkerData>> = [];
 
-  const piscina = new Piscina<IWorkerData, IWorkerResult>({
+  const piscina = new Piscina<
+    z.infer<typeof WorkerData>,
+    z.infer<typeof WorkerResult>
+  >({
     filename: path.join(__dirname, "worker.js"),
     maxThreads: threads,
   });
