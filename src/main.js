@@ -11,10 +11,9 @@ document.getElementById("startRender").onclick = () => {
   const blockSize = parseInt(document.getElementById("inputBlockSize").value);
   const threads = parseInt(document.getElementById("inputThreads").value);
   const iterations = parseInt(document.getElementById("inputIterations").value);
-  const reMin = parseFloat(document.getElementById("inputRealMin").value);
-  const reMax = parseFloat(document.getElementById("inputRealMax").value);
-  const imMin = parseFloat(document.getElementById("inputImaginaryMin").value);
-  const imMax = parseFloat(document.getElementById("inputImaginaryMax").value);
+  const real = parseFloat(document.getElementById("inputReal").value);
+  const imaginary = parseFloat(document.getElementById("inputImaginary").value);
+  const zoom = parseFloat(document.getElementById("inputZoom").value);
 
   canvas.width = width;
   canvas.height = height;
@@ -26,10 +25,9 @@ document.getElementById("startRender").onclick = () => {
     blockSize,
     threads,
     iterations,
-    reMin,
-    reMax,
-    imMin,
-    imMax,
+    real,
+    imaginary,
+    zoom,
   };
   socket.send(JSON.stringify(config));
 };
@@ -50,8 +48,7 @@ function drawBlock(data) {
   const imageData = ctx.createImageData(blockWidth, blockHeight);
 
   for (let i = 0; i < pixels.length; i++) {
-    const iter = pixels[i];
-    const color = iter === 1000 ? 0 : 255 - (iter % 255);
+    const color = Math.floor(255 * (1 - pixels[i]));
     const base = i * 4;
     imageData.data[base + 0] = color;
     imageData.data[base + 1] = color;

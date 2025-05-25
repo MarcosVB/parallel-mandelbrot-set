@@ -9,10 +9,9 @@ const Image = z.object({
 
 const Mandelbrot = z.object({
   iterations: z.number().int().positive(),
-  reMin: z.number(),
-  reMax: z.number(),
-  imMin: z.number(),
-  imMax: z.number(),
+  real: z.number(),
+  imaginary: z.number(),
+  zoom: z.number().positive(),
 });
 
 const Block = z.object({

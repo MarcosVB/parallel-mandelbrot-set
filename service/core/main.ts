@@ -13,10 +13,9 @@ export async function computeMandelbrot({
   threads,
   iterations,
   width,
-  reMin,
-  reMax,
-  imMin,
-  imMax,
+  real,
+  imaginary,
+  zoom,
   ws,
 }: z.infer<typeof ComputeMandelbrot>) {
   const tasks: Array<z.infer<typeof WorkerData>> = [];
@@ -38,10 +37,9 @@ export async function computeMandelbrot({
         blockHeight: blockSize,
         width,
         height,
-        reMin,
-        reMax,
-        imMin,
-        imMax,
+        real,
+        imaginary,
+        zoom,
         iterations,
       });
     }

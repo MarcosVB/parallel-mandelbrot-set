@@ -8,18 +8,25 @@ export default ({
   blockHeight,
   width,
   height,
-  reMin,
-  reMax,
-  imMin,
-  imMax,
+  real,
+  imaginary,
+  zoom,
   iterations,
 }: z.infer<typeof WorkerData>): z.infer<typeof WorkerResult> => {
-  const pixels = [];
+  const pixels: number[] = [];
+
+  const aspectRatio = width / height;
+  const scale = 1 / zoom;
+
+  const reMin = real - scale * aspectRatio;
+  const reMax = real + scale * aspectRatio;
+  const imMin = imaginary - scale;
+  const imMax = imaginary + scale;
 
   for (let y = yStart; y < yStart + blockHeight; y++) {
     for (let x = xStart; x < xStart + blockWidth; x++) {
-      const re = (x / width) * (reMax - reMin) + reMin;
-      const im = (y / height) * (imMax - imMin) + imMin;
+      const re = ((x + 0.5) / width) * (reMax - reMin) + reMin;
+      const im = imMax - ((y + 0.5) / height) * (imMax - imMin);
       const iter = mandelbrot(re, im, iterations);
       pixels.push(iter);
     }
@@ -44,5 +51,5 @@ function mandelbrot(cx: number, cy: number, iterations: number) {
     x = xTemp;
     i++;
   }
-  return i;
+  return i / iterations;
 }
