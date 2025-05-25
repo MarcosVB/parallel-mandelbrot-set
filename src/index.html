@@ -57,6 +57,16 @@
             margin: auto;
             border-top: 1px solid #333;
         }
+
+        .presets {
+            margin-top: 1em;
+        }
+
+        .presets button {
+            margin-right: 0.5em;
+            padding: 0.3em 0.6em;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -71,6 +81,15 @@
         <label>Imaginary: <input type="number" id="inputImaginary" value="0" step="0.01"></label>
         <label>Zoom: <input type="number" id="inputZoom" value="1" step="1"></label>
         <button id="startRender">Run</button>
+    </div>
+
+    <div class="presets">
+        <button data-real="-0.5" data-imaginary="0" data-zoom="1">Default</button>
+        <button data-real="-0.747" data-imaginary="0.101" data-zoom="150">Seahorse Valley</button>
+        <button data-real="0.304" data-imaginary="0.024" data-zoom="150">Elephant Valley</button>
+        <button data-real="-1.768778833" data-imaginary="0.001738996" data-zoom="2000000">Julia Island</button>
+        <button data-real="-0.776592847" data-imaginary="0.136640848" data-zoom="10000">Sun</button>
+        <button data-real="-0.374" data-imaginary="-0.659" data-zoom="150">Starfish</button>
     </div>
 
     <canvas id="mandelbrotCanvas" width="800" height="600"></canvas>

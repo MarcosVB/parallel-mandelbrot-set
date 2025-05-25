@@ -47,6 +47,19 @@ inputZoom.addEventListener("input", () => {
   inputImaginary.step = adjustedStep.toString();
 });
 
+document.querySelectorAll(".presets button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const real = btn.getAttribute("data-real");
+    const imaginary = btn.getAttribute("data-imaginary");
+    const zoom = btn.getAttribute("data-zoom");
+
+    document.getElementById("inputReal").value = real;
+    document.getElementById("inputImaginary").value = imaginary;
+    document.getElementById("inputZoom").value = zoom;
+    document.getElementById("startRender").click();
+  });
+});
+
 socket.onopen = () => {
   console.log("Connected to Mandelbrot WebSocket server");
 };
