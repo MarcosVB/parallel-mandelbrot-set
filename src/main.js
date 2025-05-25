@@ -2,18 +2,24 @@ const canvas = document.getElementById("mandelbrotCanvas");
 const ctx = canvas.getContext("2d");
 const socket = new WebSocket(`ws://${location.host}`);
 
-let width = canvas.width;
-let height = canvas.height;
+const inputWidth = document.getElementById("inputWidth");
+const inputHeight = document.getElementById("inputHeight");
+const inputBlockSize = document.getElementById("inputBlockSize");
+const inputThreads = document.getElementById("inputThreads");
+const inputIterations = document.getElementById("inputIterations");
+const inputReal = document.getElementById("inputReal");
+const inputImaginary = document.getElementById("inputImaginary");
+const inputZoom = document.getElementById("inputZoom");
 
 document.getElementById("startRender").onclick = () => {
-  width = parseInt(document.getElementById("inputWidth").value);
-  height = parseInt(document.getElementById("inputHeight").value);
-  const blockSize = parseInt(document.getElementById("inputBlockSize").value);
-  const threads = parseInt(document.getElementById("inputThreads").value);
-  const iterations = parseInt(document.getElementById("inputIterations").value);
-  const real = parseFloat(document.getElementById("inputReal").value);
-  const imaginary = parseFloat(document.getElementById("inputImaginary").value);
-  const zoom = parseFloat(document.getElementById("inputZoom").value);
+  const width = parseInt(inputWidth.value);
+  const height = parseInt(inputHeight.value);
+  const blockSize = parseInt(inputBlockSize.value);
+  const threads = parseInt(inputThreads.value);
+  const iterations = parseInt(inputIterations.value);
+  const real = parseFloat(inputReal.value);
+  const imaginary = parseFloat(inputImaginary.value);
+  const zoom = parseFloat(inputZoom.value);
 
   canvas.width = width;
   canvas.height = height;
@@ -31,6 +37,15 @@ document.getElementById("startRender").onclick = () => {
   };
   socket.send(JSON.stringify(config));
 };
+
+inputZoom.addEventListener("input", () => {
+  const zoom = parseFloat(inputZoom.value);
+  const baseStep = 0.01;
+  const adjustedStep = baseStep / zoom;
+
+  inputReal.step = adjustedStep.toString();
+  inputImaginary.step = adjustedStep.toString();
+});
 
 socket.onopen = () => {
   console.log("Connected to Mandelbrot WebSocket server");
