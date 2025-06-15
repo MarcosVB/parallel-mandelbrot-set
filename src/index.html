@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mandelbrot Renderer</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            font-family: sans-serif;
+            color: white;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px;
+            background: #111;
+            font-size: 13px;
+            border-bottom: 1px solid #333;
+        }
+
+        .group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            background: #1a1a1a;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .group label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 2px 4px;
+            font-size: 12px;
+            border: none;
+            border-radius: 4px;
+            background: #222;
+            color: white;
+        }
+
+        #startRender {
+            padding: 6px 14px;
+            font-size: 13px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #startRender:hover {
+            background: #444;
+        }
+
+        canvas {
+            display: block;
+            margin: auto;
+            border-top: 1px solid #333;
+        }
+
+        .presets {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            background: #111;
+            padding: 10px;
+            font-size: 13px;
+            border-bottom: 1px solid #333;
+        }
+
+        .presets button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+        }
+
+        .presets button:hover {
+            background: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <div class="group">
+            <label>Width: <input type="number" id="inputWidth" value="800"></label>
+            <label>Height: <input type="number" id="inputHeight" value="800"></label>
+            <label>Block: <input type="number" id="inputBlockSize" value="100"></label>
+            <label>Threads: <input type="number" id="inputThreads" value="4"></label>
+            <label>Iterations: <input type="number" id="inputIterations" value="200"></label>
+        </div>
+        <div class="group">
+            <label>Real: <input type="number" id="inputReal" value="-0.5" step="0.01"></label>
+            <label>Imaginary: <input type="number" id="inputImaginary" value="0" step="0.01"></label>
+            <label>Zoom: <input type="number" id="inputZoom" value="1" step="1"></label>
+            <button id="startRender">Render</button>
+        </div>
+    </div>
+
+    <div class="presets">
+        <button data-real="-0.5" data-imaginary="0" data-zoom="1">Default</button>
+        <button data-real="-0.747" data-imaginary="0.101" data-zoom="150">Seahorse Valley</button>
+        <button data-real="0.304" data-imaginary="-0.024" data-zoom="150">Elephant Valley</button>
+        <button data-real="-0.155" data-imaginary="-0.6532" data-zoom="1000">Triple Spiral Valley</button>
+        <button data-real="-1.768778833" data-imaginary="0.001738996" data-zoom="2000000">Julia Island</button>
+        <button data-real="-0.776592847" data-imaginary="0.136640848" data-zoom="10000">Sun</button>
+        <button data-real="-0.374" data-imaginary="-0.659" data-zoom="150">Starfish</button>
+    </div>
+
+    <canvas id="mandelbrotCanvas" width="800" height="600"></canvas>
+    <script src="main.js"></script>
+</body>
+
+</html>
